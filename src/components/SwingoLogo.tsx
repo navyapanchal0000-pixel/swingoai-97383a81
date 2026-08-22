@@ -20,9 +20,9 @@ export function SwingoMark({
   );
 }
 
-/** Main app logo — exact 3cm height x 2cm width as specified. */
+/** Main app logo — exact 3.5cm height x 3.5cm width as specified. */
 export function SwingoAppLogo() {
-  return <SwingoMark style={{ height: "3cm", width: "2cm" }} />;
+  return <SwingoMark style={{ height: "3.5cm", width: "3.5cm" }} />;
 }
 
 /** Swingo Live button logo: audio waveform bars with the letter S. */
