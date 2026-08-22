@@ -1,24 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { z } from "zod";
-
-const GATEWAY = "https://ai.gateway.lovable.dev/v1";
-
-const IDENTITY =
-  "Swingo AI was made and developed by Navya Panchal to help and assist you with your tasks seamlessly!";
-
-const SYSTEM_PROMPT = [
-  "You are Swingo AI, a warm, sharp and extremely capable assistant.",
-  `If the user asks who developed you, who made you, or who your owner is, you must reply exactly: "${IDENTITY}"`,
-  "You are great at maths (show clean step-by-step working) and at code (always use fenced code blocks).",
-  "Use the provided long-term memory about the user to personalise every answer.",
-  "Keep answers focused and well formatted with short paragraphs and markdown.",
-].join(" ");
-
-const ChatInput = z.object({
-  messages: z.array(z.object({ role: z.enum(["user", "assistant"]), content: z.string() })),
-  memory: z.string().optional(),
-  mode: z.enum(["chat", "maths", "code", "live"]).default("chat"),
-});
+import { ChatInput, GATEWAY, ImageInput, SYSTEM_PROMPT, modeHint } from "./ai-prompts";
 
 export const askSwingo = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => ChatInput.parse(data))
@@ -26,18 +7,9 @@ export const askSwingo = createServerFn({ method: "POST" })
     const key = process.env["LOVABLE_API_KEY"];
     if (!key) throw new Error("AI is not configured yet.");
 
-    const modeHint =
-      data.mode === "maths"
-        ? " The user is in MATHS mode: solve rigorously with numbered steps and a final boxed answer line."
-        : data.mode === "code"
-          ? " The user is in CodeX mode: return production-ready code with a short explanation."
-          : data.mode === "live"
-            ? " The user is in Swingo Live voice mode: answer in short spoken sentences."
-            : "";
-
     const system =
       SYSTEM_PROMPT +
-      modeHint +
+      modeHint(data.mode) +
       (data.memory ? `\n\nLong-term memory about this user:\n${data.memory}` : "");
 
     const res = await fetch(`${GATEWAY}/chat/completions`, {
@@ -57,17 +29,9 @@ export const askSwingo = createServerFn({ method: "POST" })
       throw new Error(`Swingo could not answer (${res.status}). ${body.slice(0, 200)}`);
     }
 
-    const json = (await res.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
+    const json = (await res.json()) as { choices?: { message?: { content?: string } }[] };
     return { text: json.choices?.[0]?.message?.content ?? "" };
   });
-
-const ImageInput = z.object({
-  prompt: z.string().min(1),
-  size: z.string().default("1024x1024"),
-  format: z.enum(["png", "jpg"]).default("png"),
-});
 
 export const generateSwingoImage = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => ImageInput.parse(data))
