@@ -21,7 +21,7 @@ import { askSwingo, generateSwingoImage } from
         content:
           "Chat, generate images, solve maths and write code with SWINGO AI, built by Navya Panchal.",
       },
-      { property: "og:title", content: "SWINGO — AI assistant by Navya Panchal" },
+     { property: "og:image", content: "https://swingoai.vercel.app/favicon.png" },
       {
         property: "og:description",
         content: "Chat, images, maths, code and live voice — all inside SWINGO AI.",
