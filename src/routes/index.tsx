@@ -6,7 +6,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { AppSidebar, type ChatItem } from "@/components/AppSidebar";
 import { MessageCard, type ChatMessage } from "@/components/MessageCard";
 import { PromptBox } from "@/components/PromptBox";
-import { SwingoAppLogo, SwingoMark } from "@/components/SwingoLogo";
+import { SwingoMark } from "@/components/SwingoLogo";
 import { useAuth } from "@/lib/auth";
 import { PLANS, type PlanId } from "@/lib/plans";
 import { speak, stopSpeaking } from "@/lib/speech";
@@ -247,7 +247,11 @@ function Home() {
       <main className="scroll-fast relative mx-auto w-full max-w-3xl flex-1 px-4 pb-48">
         {empty ? (
           <div className="flex min-h-[62vh] flex-col items-center justify-center text-center">
-            <SwingoAppLogo />
+            <img 
+              src="/favicon.png" 
+              alt="Swingo Logo" 
+              style={{ height: '3.5cm', width: '3.5cm', objectFit: 'contain' }} 
+            />
             <h1 className="mt-4 font-display text-4xl font-bold uppercase tracking-[0.26em]">
               Swingo
             </h1>
