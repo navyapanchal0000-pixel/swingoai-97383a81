@@ -10,9 +10,9 @@ import { SwingoMark } from "@/components/SwingoLogo";
 import { useAuth } from "@/lib/auth";
 import { PLANS, type PlanId } from "@/lib/plans";
 import { speak, stopSpeaking } from "@/lib/speech";
-import { askSwingo, generateSwingoImage } from "@/lib/ai.functions";
+import { askSwingo, generateSwingoImage } from 
 
-export const Route = createFileRoute("/")({
+  export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "SWINGO — AI assistant by Navya Panchal" },
@@ -25,11 +25,13 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content: "Chat, images, maths, code and live voice — all inside SWINGO AI.",
-      },
+      }
+      { property: "og:image", content: `${window.location.origin}/favicon.png` },
     ],
   }),
   component: Home,
 });
+
 
 type Mode = "chat" | "image" | "maths" | "code";
 
