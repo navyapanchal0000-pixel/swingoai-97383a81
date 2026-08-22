@@ -175,7 +175,7 @@ export function AppSidebar({
       </div>
 
       {menuFor && (
-        <div className="fixed inset-0 z-60 grid place-items-end bg-foreground/30 p-4 pb-8 sm:place-items-center">
+        <div className="fixed inset-0 z-[60] grid place-items-end bg-foreground/30 p-4 pb-8 sm:place-items-center">
           <div className="animate-rise w-full max-w-sm rounded-3xl border border-border bg-popover p-2 text-popover-foreground shadow-[var(--shadow-float)]">
             <p className="truncate px-4 py-3 text-sm font-medium">{menuFor.title}</p>
             <PopupRow
